@@ -1,0 +1,90 @@
+#root {
+    margin: 0;
+    padding: 0;
+   }
+  
+   .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    background-color: #2196F3;
+    
+    padding: 16px 100px; 
+/* margin: 0 50px; */
+  }
+  .grid-item {
+    background-color: red;
+
+  }
+ 
+.e-pro-con  {
+    /* background-color:rgb(76, 158, 119); */
+    display: flex;
+} 
+
+.image-container{
+    display: flex;
+    gap: 5px;
+}
+
+
+  .image-preview-container {
+ display: flex;
+ flex-direction: column;
+ /* background-color: pink; */
+ gap: 5px;
+ /* justify-content: space-around; */
+  }
+
+  .each-image-preview {
+width: 80px;
+height: 80px;
+/* background-color:red; */
+    cursor: pointer;
+
+  }
+  .preview-image{
+    width: 80px;
+    height: 80px;
+    /* background-color:blue; */
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .main-image-container{
+    width: 500px;
+    height: 500px;
+   
+  }
+  .main-image{
+    width: 500px;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+
+.e-pro-container{
+    display: flex;
+    flex-direction: column;
+    /* background-color: red; */
+    width: 300px;
+    gap: 50px;
+    margin-top: 50px;
+    margin-left: 80px;
+   
+    
+}
+   .e-p-btn{
+    /* background-color:red; */
+    display: flex;
+    gap: 50px;
+    /* padding:0 10px 10px;    */
+   }
+   .e-btn{
+    width: 500px;
+    height: 40px;
+   }
