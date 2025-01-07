@@ -17,6 +17,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Cartcomp = () => {
   const theme = useTheme();
@@ -24,7 +25,7 @@ const Cartcomp = () => {
   const [opnedrawer, Setopenndrawer] = useState(false);
   const cart = useSelector((state) => state.cart.value);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const IncQutChange = (id, increment) => {
     const updatedCart = cart.map((item) =>
       item._id === id
@@ -48,6 +49,9 @@ const Cartcomp = () => {
     const del = cart?.filter((item) => item?._id !== cartdata?._id);
     dispatch(addTocart(del));
   };
+  const location = useLocation();
+  const hideCartOnRoutes = ["/AnnonShopping/CheckOut"]; // Add the routes where you want to hide the cart
+  const shouldHideCart = hideCartOnRoutes.includes(location.pathname);
 
   return (
     <React.Fragment>
@@ -214,7 +218,12 @@ const Cartcomp = () => {
                 </Box>
               </ListItem>
               <ListItem>
-                <Button fullWidth size="large" variant="contained">
+                <Button
+                  onClick={() => navigate("/AnnonShopping/CheckOut")}
+                  fullWidth
+                  size="large"
+                  variant="contained"
+                >
                   Checkout
                 </Button>
               </ListItem>
@@ -223,14 +232,16 @@ const Cartcomp = () => {
         </List>
       </Drawer>
 
-      <Button
-        variant="outlined"
-        color="inherit"
-        onClick={() => Setopenndrawer(!opnedrawer)}
-      >
-        <ShoppingCartIcon />
-        Cart
-      </Button>
+      {!shouldHideCart && (
+        <Button
+          variant="outlined"
+          color="inherit"
+          onClick={() => Setopenndrawer(!opnedrawer)}
+        >
+          <ShoppingCartIcon />
+          Cart
+        </Button>
+      )}
     </React.Fragment>
   );
 };

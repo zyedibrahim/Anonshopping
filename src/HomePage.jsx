@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import API from "./data";
 import ImageSlider from "./ImageSlider";
-import { useDispatch } from "react-redux";
 import { addTocart } from "./features/CartSlice.jsx";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ const HomePage = () => {
   return (
     <div>
       <TextField
-        sx={{ marginTop: "80px" }}
+        sx={{}}
         fullWidth
         variant="outlined"
         placeholder="Search for anything..."
@@ -59,13 +59,9 @@ const HomePage = () => {
       <div className="grid-container">
         {filterdata.length > 0 ? (
           filterdata.map((ele, index) => (
-            <Card
-              onClick={() => navigate(`/AnnonShopping/Product/${ele._id}`)}
-              className="grid-item "
-              sx={{ maxWidth: 250 }}
-              key={index}
-            >
+            <Card className="grid-item " sx={{ maxWidth: 250 }} key={index}>
               <CardMedia
+                onClick={() => navigate(`/AnnonShopping/Product/${ele._id}`)}
                 sx={{
                   height: 300,
                   transition: "transform 0.3s ease-in-out", // Smooth transition for the zoom effect

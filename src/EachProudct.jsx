@@ -3,12 +3,57 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API from "./data";
 import { useTheme } from "@mui/material";
-import { Transform } from "@mui/icons-material";
-import { red } from "@mui/material/colors";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addTocart } from "./features/CartSlice";
 export default function EachProudct() {
   const { id } = useParams();
   const [Product, SetProduct] = useState();
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.value);
+  const navigate = useNavigate();
+  const Addtocart = (cartdata) => {
+    const isItemInCart = cart.some((item) => item._id === cartdata._id); // Check if the item is already in the cart
+    if (!isItemInCart) {
+      // Add `pd_tqty: 1` to the new item and update the cart
+      const newCartItem = { ...cartdata, pd_tqty: Number(1) };
+      dispatch(addTocart([...cart, newCartItem]));
+
+      console.log(cart, "cartitem triggers form homepage");
+    } else {
+      // If the item already exists in the cart, update its price
+      const updatedCart = cart.map((item) =>
+        item._id === id
+          ? { ...item, pd_tqty: Math.min(9, item.pd_tqty || 1) + 1 }
+          : item
+      );
+      dispatch(addTocart(updatedCart));
+      console.log("Updated item price in cart:", updatedCart);
+    }
+  };
+
+  const CheckOut = (cartdata) => {
+    const isItemInCart = cart.some((item) => item._id === cartdata._id); // Check if the item is already in the cart
+    if (!isItemInCart) {
+      // Add `pd_tqty: 1` to the new item and update the cart
+      const newCartItem = { ...cartdata, pd_tqty: Number(1) };
+      dispatch(addTocart([...cart, newCartItem]));
+      navigate("/AnnonShopping/CheckOut");
+      console.log(cart, "eachproduct triggers form homepage");
+    } else {
+      // If the item already exists in the cart, update its price
+      const updatedCart = cart.map((item) =>
+        item._id === id
+          ? { ...item, pd_tqty: Math.min(9, item.pd_tqty || 1) + 1 }
+          : item
+      );
+      dispatch(addTocart(updatedCart));
+      navigate("/AnnonShopping/CheckOut");
+    }
+  };
+
   const trigger = () => {
     // Use `find` to get the product with the matching id
     const selectedProduct = API.find((item) => item._id === id);
@@ -116,9 +161,10 @@ export default function EachProudct() {
                 width: { xs: "100%", sm: "70%", md: "500px" },
                 height: "500px",
                 objectFit: "cover",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center", // Centers the image
+                backgroundSize: "cover", // Ensures the image covers the entire box
+                backgroundRepeat: "no-repeat", // Prevents repetition of the image
+                backgroundAttachment: "fixed", // Fixes the background image while scrolling
                 cursor: "pointer",
                 transition: "transform 0.3s",
               }}
@@ -138,10 +184,18 @@ export default function EachProudct() {
 
           {/* product button */}
           <Box sx={{ display: "flex", gap: "5px" }}>
-            <Button sx={{ width: "130px" }} variant="contained">
+            <Button
+              onClick={() => Addtocart(Product)}
+              sx={{ width: "130px" }}
+              variant="contained"
+            >
               Add to Cart
             </Button>
-            <Button sx={{ width: "130px" }} variant="contained">
+            <Button
+              onClick={() => CheckOut(Product)}
+              sx={{ width: "130px" }}
+              variant="contained"
+            >
               Buy Now
             </Button>
           </Box>

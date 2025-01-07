@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   Button,
   Tab,
   Tabs,
@@ -12,6 +13,7 @@ import React, { useState } from "react";
 import Drawercomp from "./Drawer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Cartcomp from "./Cartcomp";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const navdata = ["Home", "About", "Products", "Contact us"];
@@ -19,12 +21,12 @@ const Navbar = () => {
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   console.log(isMatch);
+
   return (
-    <div className="nav_bottom">
-      <AppBar>
+    <Box>
+      <AppBar position="fixed" sx={{}}>
         <Toolbar>
           <Typography>Annonshopping</Typography>
-
           {isMatch ? (
             <Drawercomp />
           ) : (
@@ -43,7 +45,10 @@ const Navbar = () => {
           <Cartcomp />
         </Toolbar>
       </AppBar>
-    </div>
+
+      {/* Spacer below AppBar */}
+      <Box sx={{ height: "100px" }} />
+    </Box>
   );
 };
 
