@@ -11,6 +11,7 @@ export default function EachProudct() {
   const { id } = useParams();
   const [Product, SetProduct] = useState();
   const theme = useTheme();
+  const [ImageSel, SetImageSel] = useState();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.value);
   const navigate = useNavigate();
@@ -58,7 +59,9 @@ export default function EachProudct() {
     // Use `find` to get the product with the matching id
     const selectedProduct = API.find((item) => item._id === id);
     SetProduct(selectedProduct); // Set the product state with the selected product
-    console.log(Product, "triggers");
+    SetImageSel(selectedProduct?.pd_img[0]); // Update ImageSel when Product is set
+
+    console.log(Product?.pd_img, "triggers");
   };
 
   useEffect(() => {
@@ -103,47 +106,46 @@ export default function EachProudct() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "row", sm: "row", md: "column" },
               gap: "5px",
-              justifyContent: { xs: "center", sm: "center", md: "start" },
+              flexDirection: {
+                xs: "row",
+                sm: "row",
+                md: "column",
+              },
+              justifyContent: { xs: "center", md: "start" },
+
+              // backgroundColor: "black",
             }}
           >
-            <Box
-              sx={{
-                width: "80px",
-                height: "80px",
-              }}
-            >
+            {Product?.pd_img?.map((item, index) => (
               <Box
+                key={index}
                 sx={{
                   width: "80px",
                   height: "80px",
-                  objectFit: "cover",
+                  border: "2px solid rgb(155, 151, 142) ",
+                  borderRadius: "5px",
                   cursor: "pointer",
                   transition: "transform 0.3s",
+                  "&:hover": {},
                 }}
-                component="img"
-                src={Product?.pd_img}
-              />
-            </Box>
-            <Box
-              sx={{
-                width: "80px",
-                height: "80px",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "80px",
-                  height: "80px",
-                  objectFit: "cover",
-                  cursor: "pointer",
-                  transition: "transform 0.3s",
-                }}
-                component="img"
-                src={Product?.pd_img}
-              />
-            </Box>
+              >
+                <Box
+                  onClick={() => {
+                    SetImageSel(item);
+                  }}
+                  sx={{
+                    width: "80px",
+                    height: "80px",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                    transition: "transform 0.3s",
+                  }}
+                  component="img"
+                  src={item}
+                />
+              </Box>
+            ))}
           </Box>
 
           {/* main image box */}
@@ -169,7 +171,7 @@ export default function EachProudct() {
                 transition: "transform 0.3s",
               }}
               component="img"
-              src={Product?.pd_img}
+              src={ImageSel}
             />
           </Box>
         </Box>

@@ -9,7 +9,9 @@ function CheckOutPage() {
   const cart = useSelector((state) => state.cart.value);
   console.log(cart, "checked out");
   return (
-    <Box sx={{ padding: { xs: "0px 0px", md: "0px 80px" } }}>
+    <Box
+      sx={{ padding: { xs: "0px 0px", md: "0px 80px" }, marginTop: "100px" }}
+    >
       <Box sx={{ display: "flex", gap: "15px" }}>
         <Box>Cart</Box>
 
@@ -98,8 +100,9 @@ function CheckOutPage() {
                       width: 100,
                       backgroundAttachment: "center",
                       height: "200px",
+                      backgroundImagewidth: "100px",
                     }}
-                    image={item?.pd_img}
+                    image={item?.pd_img[0]}
                     alt="Live from space album cover"
                   />
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -150,7 +153,7 @@ function CheckOutPage() {
                   Shipping
                 </Typography>
                 <Typography color="secondary" sx={{ fontSize: "18px" }}>
-                  70
+                  Free
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>

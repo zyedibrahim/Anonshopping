@@ -6,12 +6,15 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-const pages = ["Products", "Services", "ABoutUs", "ContactUs"];
+const pages = ["Home", "About", "Products", "ContactUs"];
 import Cartcomp from "./Cartcomp";
+import { useNavigate } from "react-router-dom";
 
 const Drawercomp = () => {
+  const navigate = useNavigate();
   const [opnedrawer, Setopenndrawer] = useState(false);
 
   return (
@@ -25,11 +28,27 @@ const Drawercomp = () => {
         open={opnedrawer}
         onClose={() => Setopenndrawer(false)}
       >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "20px",
+          }}
+        >
+          AnnonShopping
+        </Box>
         <List>
           {pages.map((page, index) => (
-            <ListItemButton onClick={() => Setopenndrawer(false)} key={index}>
+            <ListItemButton
+              onClick={() => {
+                Setopenndrawer(false);
+                navigate(page); // Navigate to the corresponding page when clicked
+              }}
+              key={index}
+            >
               <ListItemIcon>
-                <ListItemText>{page}</ListItemText>
+                <ListItemText sx={{ color: "black" }}>{page}</ListItemText>
               </ListItemIcon>
             </ListItemButton>
           ))}

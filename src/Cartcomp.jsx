@@ -97,7 +97,7 @@ const Cartcomp = () => {
                   <CardMedia
                     component="img"
                     sx={{ width: 151 }}
-                    image={item?.pd_img}
+                    image={item?.pd_img[0]}
                     alt="Live from space album cover"
                   />
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
